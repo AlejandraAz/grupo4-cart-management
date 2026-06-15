@@ -129,7 +129,7 @@ Cada prueba genera sus propios datos utilizando valores únicos, evitando depend
 ### Clonar el repositorio
 
 ```bash
-git clone <url-del-repositorio>
+git clone https://github.com/AlejandraAz/grupo4-cart-management.git
 ```
 
 ### Instalar dependencias
