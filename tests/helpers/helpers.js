@@ -31,4 +31,15 @@ async function crearUsuarioPorAPI(request) {
   return usuario;
 }
 
-module.exports = { API, WEB, generarUsuario, crearUsuarioPorAPI };
+// para iniciar sesion
+async function loginUsuarioPorAPI(request, username, password) {
+  const response = await request.post(`${API}/login`, { data: { username, password } });
+  if (response.status() !== 200) {
+    throw new Error(`Login failed: ${response.status()}`);
+  }
+  const text = await response.text();
+  // Ejemplo de text: "Auth_token: YWx1bW5vXzE3ODE1..."
+  const token = text.replace('Auth_token:', '').trim();
+  return token;
+}
+module.exports = { API, WEB, loginUsuarioPorAPI,generarUsuario, crearUsuarioPorAPI };

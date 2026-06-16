@@ -10,7 +10,7 @@
  */
 
 const { test, expect } = require('@playwright/test');
-const { API, generarUsuario } = require('../helpers');
+const { API, generarUsuario } = require('../helpers/helpers');
 
 test('GET - Listar productos del catalogo', async ({ request }) => {
   const response = await request.get(`${API}/entries`);

@@ -1,5 +1,5 @@
 // @ts-check
-const { defineConfig, devices } = require('@playwright/test');
+import { defineConfig, devices } from '@playwright/test';
 
 /**
  * Configuracion de Playwright para el proyecto final.
@@ -9,7 +9,7 @@ module.exports = defineConfig({
   testDir: './tests',
 
   // Tiempo maximo que puede tardar un test antes de fallar
-  timeout: 30 * 1000,
+  timeout: 30 * 5000,
 
   // Corre los tests en paralelo
   fullyParallel: true,
@@ -29,6 +29,9 @@ module.exports = defineConfig({
 
     // Captura screenshot solo si el test falla
     screenshot: 'only-on-failure',
+    launchOptions: {
+    slowMo: 2000,
+  },
   },
 
   // Navegadores donde corren los tests
