@@ -1,4 +1,4 @@
-import { test } from '@playwright/test';
+const { test } = require('@playwright/test');
 
 test('Ver cookies de DemoBlaze', async ({ page }) => {
   await page.goto('/');

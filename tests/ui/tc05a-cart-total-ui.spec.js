@@ -1,5 +1,5 @@
-import { test, expect } from '@playwright/test';
-import { PRODUCTS } from '../data/products';
+const { test, expect } = require('@playwright/test');
+const { PRODUCTS } = require('../data/products');
 
 test('TC05 - Validar total actualizado correctamente', async ({ page }) => {
   const producto = PRODUCTS.SONY_XPERIA_Z5;
