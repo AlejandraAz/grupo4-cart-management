@@ -3,20 +3,19 @@ const { API } = require('../helpers/helpers');
 const { obtenerCookieUsuario } = require('../helpers/cookies');
 
 test('TC04 - Empty cart API', async ({ page, request }) => {
+  await page.goto('/');
 
-    await page.goto('/');
+  const cookie = await obtenerCookieUsuario(page);
 
-    const cookie = await obtenerCookieUsuario(page);
+  const response = await request.post(`${API}/deletecart`, {
+    data: {
+      cookie,
+    },
+  });
 
-    const response = await request.post(`${API}/deletecart`, {
-        data: {
-            cookie,
-        },
-    });
+  expect(response.status()).toBe(200);
 
-    expect(response.status()).toBe(200);
+  const body = await response.text();
 
-    const body = await response.text();
-
-    expect(body).toContain('Item deleted');
+  expect(body).toContain('Item deleted');
 });
