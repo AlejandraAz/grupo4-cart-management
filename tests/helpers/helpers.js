@@ -9,7 +9,7 @@
 // URLs base
 const API = 'https://api.demoblaze.com';
 const WEB = 'https://www.demoblaze.com';
-
+import { page } from '@playwright/test';
 /**
  * Genera un usuario unico usando la fecha actual.
  * Asi nunca choca con "usuario ya existe".
@@ -33,7 +33,9 @@ async function crearUsuarioPorAPI(request) {
 
 // para iniciar sesion
 async function loginUsuarioPorAPI(request, username, password) {
-  const response = await request.post(`${API}/login`, { data: { username, password } });
+  const response = await request.post(`${API}/login`, {
+    data: { username, password },
+  });
   if (response.status() !== 200) {
     throw new Error(`Login failed: ${response.status()}`);
   }
@@ -42,4 +44,21 @@ async function loginUsuarioPorAPI(request, username, password) {
   const token = text.replace('Auth_token:', '').trim();
   return token;
 }
-module.exports = { API, WEB, loginUsuarioPorAPI,generarUsuario, crearUsuarioPorAPI };
+async function enviarProductos(page,expect , productoName) {
+  await page.goto(`${WEB}`);
+  await page.getByRole('link', { name: productoName }).click();
+  const dialogPromise1 = page.waitForEvent('dialog');
+  await page.getByRole('link', { name: 'Add to cart' }).click();
+  const dialog1 = await dialogPromise1;
+  expect(dialog1.message()).toContain('Product added');
+  await dialog1.accept();
+}
+
+module.exports = {
+  API,
+  WEB,
+  loginUsuarioPorAPI,
+  generarUsuario,
+  crearUsuarioPorAPI,
+  enviarProductos
+};

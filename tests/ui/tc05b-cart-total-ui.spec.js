@@ -1,5 +1,6 @@
 const { test, expect } = require('@playwright/test');
 const { PRODUCTS } = require('../data/products');
+const { enviarProductos } = require('../helpers/helpers');
 
 test('TC05b - Validar total con dos productos', async ({ page }) => {
   const producto1 = PRODUCTS.SONY_XPERIA_Z5;
@@ -37,4 +38,35 @@ test('TC05b - Validar total con dos productos', async ({ page }) => {
   const totalMostrado = Number(await page.locator('#totalp').textContent());
   const totalEsperado = producto1.price + producto2.price;
   expect(totalMostrado).toBe(totalEsperado);
+});
+
+test('TC05 - Mas de 2 Productos en el carrito', async ({ page }) => {
+  const calculateCartTotal = async (page) => {
+    const rows = await page.locator('#tbodyid tr.success').all();
+    let total = 0;
+    for (const row of rows) {
+      const priceText = await row.locator('td').nth(2).textContent();
+      const price = Number(priceText);
+      total += price;
+    }
+    return total;
+  };
+
+  const producto1 = PRODUCTS.SONY_XPERIA_Z5;
+  const producto2 = PRODUCTS.IPHONE_6_32GB;
+  const producto3 = PRODUCTS.SAMSUNG_GALAXY_S6;
+
+  await enviarProductos(page, expect, producto1.name);
+  await enviarProductos(page, expect, producto2.name);
+  await enviarProductos(page, expect, producto3.name);
+
+  await page.getByRole('link', { name: 'Cart', exact: true }).click();
+  await expect(page.locator('#totalp')).toBeVisible();
+
+  const totalMostrado = Number(await page.locator('#totalp').textContent());
+  const totalCalculado = await calculateCartTotal(page);
+
+  console.log(`Total mostrado: ${totalMostrado}`);
+  console.log(`Total calculado: ${totalCalculado}`);
+  expect(totalMostrado).toEqual(totalCalculado);
 });
