@@ -26,7 +26,7 @@ test('POST - assert product added to cart', async ({
 
   const addedData = await addToCartResponse.json();
   expect(addedData).toBeDefined();
-  console.log('✓ Respuesta de agregado:', addedData);
+
 
   expect(productId).toBeGreaterThan(0);
   expect(productTitle).toBeTruthy();
