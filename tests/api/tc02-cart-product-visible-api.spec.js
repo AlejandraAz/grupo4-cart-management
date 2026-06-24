@@ -26,7 +26,7 @@ test('POST - Validar que el producto está agregado al carrito', async ({
 
   const addedData = await addToCartResponse.json();
   expect(addedData).toBeDefined();
-  console.log('✓ Respuesta de agregado:', addedData);
+ 
 
   expect(productId).toBeGreaterThan(0);
   expect(productTitle).toBeTruthy();
