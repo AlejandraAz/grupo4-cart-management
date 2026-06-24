@@ -9,7 +9,7 @@ test('TC04 - Empty cart API', async ({ page, request }) => {
 
   const response = await request.post(`${API}/deletecart`, {
     data: {
-      cookie,
+      cookie: cookie,
     },
   });
 
