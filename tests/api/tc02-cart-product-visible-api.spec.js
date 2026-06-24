@@ -1,7 +1,7 @@
 const { test, expect } = require('@playwright/test');
 const { API } = require('../helpers/helpers');
 
-test('POST - Validar que el producto está agregado al carrito', async ({
+test('POST - assert product added to cart', async ({
   request,
 }) => {
   const catalogResponse = await request.get(`${API}/entries`);

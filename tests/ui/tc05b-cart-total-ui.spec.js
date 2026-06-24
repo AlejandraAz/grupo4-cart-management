@@ -2,7 +2,7 @@ const { test, expect } = require('@playwright/test');
 const { PRODUCTS } = require('../data/products');
 const { enviarProductos } = require('../helpers/helpers');
 
-test('TC05b - Validar total con dos productos', async ({ page }) => {
+test('TC05b - assert with two products in cart', async ({ page }) => {
   const producto1 = PRODUCTS.SONY_XPERIA_Z5;
   const producto2 = PRODUCTS.NOKIA_LUMIA_1520;
 
@@ -40,14 +40,14 @@ test('TC05b - Validar total con dos productos', async ({ page }) => {
   expect(totalMostrado).toBe(totalEsperado);
 });
 
-test('TC05 - Mas de 2 Productos en el carrito', async ({ page }) => {
+test('TC05 - More than one product in cart', async ({ page }) => {
   const calculateCartTotal = async (page) => {
     const rows = await page.locator('#tbodyid tr.success').all();
     let total = 0;
     for (const row of rows) {
-      const priceText = await row.locator('td').nth(2).textContent();
-      const price = Number(priceText);
-      total += price;
+      const precioTexto = await row.locator('td').nth(2).textContent();
+      const precio = Number(precioTexto);
+      total += precio;
     }
     return total;
   };
